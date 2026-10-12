@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+node_modules/
+.env
+.DS_Store
+*.log
+data/raw/*
+!data/raw/.gitkeep
+data/models/*
+!data/models/.gitkeep
+.idea/
+.vscode/
