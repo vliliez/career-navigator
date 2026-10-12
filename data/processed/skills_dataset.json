@@ -1,0 +1,42 @@
+[
+  {
+    "role": "Junior Python Developer",
+    "required_skills": ["Python", "SQL", "Git", "FastAPI", "Docker"],
+    "recommended_courses": [
+      "Основы Python",
+      "Работа с базами данных",
+      "Docker для начинающих"
+    ],
+    "extra_skills": ["AsyncIO", "Unit-тесты"]
+  },
+  {
+    "role": "Data Analyst",
+    "required_skills": ["SQL", "Excel", "Power BI", "Python", "Статистика"],
+    "recommended_courses": [
+      "SQL с нуля",
+      "Power BI базовый",
+      "Статистический анализ в Python"
+    ],
+    "extra_skills": ["Tableau", "A/B тестирование"]
+  },
+  {
+    "role": "Frontend Developer",
+    "required_skills": ["HTML", "CSS", "JavaScript", "React", "Git"],
+    "recommended_courses": [
+      "Верстка с нуля",
+      "JavaScript базовый",
+      "Введение в React"
+    ],
+    "extra_skills": ["TypeScript", "Webpack"]
+  },
+  {
+    "role": "Product Manager",
+    "required_skills": ["Agile", "Jira", "User Research", "SQL", "Коммуникации"],
+    "recommended_courses": [
+      "Agile и Scrum",
+      "User Research для начинающих",
+      "Аналитика в продукте"
+    ],
+    "extra_skills": ["CJM", "Метрики продукта"]
+  }
+]
