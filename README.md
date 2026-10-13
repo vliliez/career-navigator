@@ -1,4 +1,8 @@
 # Персональный карьерный AI-навигатор
+[![Status](https://img.shields.io/badge/status-mvp-blue)]()
+[![License](https://img.shields.io/github/license/v.liliez/career-navigator)]()
+
+> MVP: работает эндпоинт `/recommendations` на простом датасете.
 
 **Цель проекта:** помочь студентам эффективно планировать обучение и карьеру, ориентируясь на актуальные требования рынка труда.
 
