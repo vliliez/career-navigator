@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Карьерный навигатор</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
+    h1 { margin-bottom: 10px; }
+    .subtitle { color: #666; margin-bottom: 30px; }
+    label { display: block; margin-top: 20px; font-weight: 600; }
+    input[type="text"] { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #ccc; border-radius: 6px; }
+    button { margin-top: 24px; padding: 12px 24px; background: #005ff9; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #004bb2; }
+    #result { margin-top: 40px; }
+    .role-card { border: 1px solid #eee; padding: 16px; border-radius: 8px; margin-bottom: 16px; background: #fafafa; }
+    .role-title { font-weight: bold; font-size: 1.1em; color: #005ff9; }
+    .list-section { margin-top: 12px; }
+    .list-label { font-weight: 600; color: #555; }
+    ul { margin: 6px 0 0 18px; }
+    li { margin-bottom: 4px; }
+    .error { color: #d93025; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Карьерный AI-навигатор</h1>
+  <p class="subtitle">Введи свои навыки (через запятую) — получи рекомендации по ролям, курсам и навыкам.</p>
+
+  <label for="skills">Твои навыки (например: Python, SQL, Git)</label>
+  <input type="text" id="skills" placeholder="Python, SQL, Docker, React" />
+
+  <button onclick="sendRecommendation()">Получить рекомендации</button>
+
+  <div id="result"></div>
+
+  <script>
+    async function sendRecommendation() {
+      const skillsInput = document.getElementById('skills').value.trim();
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+
+      if (!skillsInput) {
+        resultDiv.innerHTML = '<div class="error">Пожалуйста, введите хотя бы один навык.</div>';
+        return;
+      }
+
+      const skillsArray = skillsInput.split(',').map(s => s.trim()).filter(Boolean);
+
+      try {
+        const res = await fetch('/recommendations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ skills: skillsArray, interests: [] })
+        });
+
+        if (!res.ok) throw new Error('Ошибка сервера');
+
+        const data = await res.json();
+
+        let html = '<h2>Твои рекомендации</h2>';
+
+        // Топ-роли
+        if (data.top_roles.length) {
+          html += '<div class="list-section"><span class="list-label">Подходящие роли:</span><ul>';
+          data.top_roles.forEach(r => html += `<li>${r}</li>`);
+          html += '</ul></div>';
+        }
+
+        // Курсы
+        if (data.recommended_courses.length) {
+          html += '<div class="list-section"><span class="list-label">Рекомендуемые курсы:</span><ul>';
+          data.recommended_courses.forEach(c => html += `<li>${c}</li>`);
+          html += '</ul></div>';
+        }
+
+        // Доп. навыки
+        if (data.additional_skills.length) {
+          html += '<div class="list-section"><span class="list-label">Дополнительные навыки для прокачки:</span><ul>';
+          data.additional_skills.forEach(s => html += `<li>${s}</li>`);
+          html += '</ul></div>';
+        }
+
+        resultDiv.innerHTML = html;
+      } catch (e) {
+        resultDiv.innerHTML = `<div class="error">Ошибка: ${e.message}. Убедись, что бэкенд (API) запущен на localhost:8000.</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
